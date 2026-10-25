@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.wabihari</groupId>
   <artifactId>AIChatbotPlugin</artifactId>
-  <version>1.1.5</version>
+  <version>1.2.0</version>
   <name>AIChatbotPlugin</name>
   <properties>
     <maven.compiler.release>21</maven.compiler.release>
