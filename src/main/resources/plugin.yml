@@ -1,9 +1,10 @@
+
 name: AIChatbotPlugin
-version: 1.1.5
+version: 1.2.0
 main: com.wabihari.aichatbot.AIChatbotPlugin
 api-version: '1.21'
 author: WabiHari
-description: AI chatbot with AI map generation
+description: AI chatbot with AI map and music generation
 
 commands:
   ai:
@@ -14,14 +15,21 @@ commands:
     description: Generate an AI image for a Minecraft map.
     usage: /aimap <description>
     permission: aichatbot.map
+  aimusic:
+    description: Generate AI music.
+    usage: /aimusic <description>
+    permission: aichatbot.music
 
 permissions:
-aichatbot.use:
-description: Allows using the AI chatbot.
-default: true
-aichatbot.admin:
-description: Allows reloading the AI chatbot configuration.
-default: op
-aichatbot.map:
-description: Allows generating AI maps.
-default: true
+  aichatbot.use:
+    description: Allows using the AI chatbot.
+    default: true
+  aichatbot.admin:
+    description: Allows reloading the AI chatbot configuration.
+    default: op
+  aichatbot.map:
+    description: Allows generating AI maps.
+    default: true
+  aichatbot.music:
+    description: Allows generating AI music.
+    default: true
