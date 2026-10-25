@@ -29,3 +29,14 @@ aimap:
     model: "@cf/bytedance/stable-diffusion-xl-lightning"
   system-prompt: "You are a helpful picture generator on a Minecraft server. Generate always cute and nice pictures. And do so good as possible."
   cooldown-seconds: 30
+
+# AI Music generation
+aimusic:
+  enabled: true
+  provider: "cloudflare"
+  cloudflare:
+    account-id: "YOUR_ACCOUNT_ID"
+    api-token: "YOUR_CLOUDFLARE_TOKEN"
+    model: "elevenlabs/music-v2"
+  cooldown-seconds: 60
+  request-timeout-seconds: 120
