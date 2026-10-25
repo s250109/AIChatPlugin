@@ -69,8 +69,7 @@ public final class AIMusicGenerator {
                 body.add("input", input);
                 body.addProperty("model", model);
 
-                String url = "https://api.cloudflare.com/client/v4/accounts/"
-                        + accountId + "/ai/run/" + model;
+                String url = "https://api.cloudflare.com/client/v4/accounts/" + accountId + "/ai/run";
 
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create(url))
@@ -85,12 +84,13 @@ public final class AIMusicGenerator {
                         HttpResponse.BodyHandlers.ofString()
                 );
 
-                if (response.statusCode() < 200
-                        || response.statusCode() >= 300) {
-                    plugin.getLogger().warning(
-                            "Music request failed with HTTP "
-                                    + response.statusCode()
-                    );
+               if (response.statusCode() < 200
+        || response.statusCode() >= 300) {
+    plugin.getLogger().warning(
+            "Music request failed with HTTP "
+                    + response.statusCode()
+                    + ": " + response.body()
+    );
 
                     sendMessage(playerId,
                             "§cMusic generation failed. Check the server console.");
