@@ -26,6 +26,7 @@ public final class AIChatbotPlugin extends JavaPlugin {
     private final Map<UUID, Long> lastUse = new ConcurrentHashMap<>();
     private HttpClient httpClient;
     private AIMapGenerator aiMapGenerator;
+    private AIMusicGenerator aiMusicGenerator;
 
     @Override
     public void onEnable() {
@@ -33,6 +34,7 @@ public final class AIChatbotPlugin extends JavaPlugin {
     rebuildHttpClient();
 
     aiMapGenerator = new AIMapGenerator(this);
+    aiMusicGenerator = new AIMusicGenerator(this);
 
     getLogger().info("AIChatbotPlugin enabled!");
 }
@@ -43,6 +45,51 @@ public final class AIChatbotPlugin extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (command.getName().equalsIgnoreCase("aimusic")) {
+    if (!sender.hasPermission("aichatbot.music")) {
+        sender.sendMessage("§cYou don't have permission to generate music!");
+        return true;
+    }
+
+    if (!(sender instanceof Player player)) {
+        sender.sendMessage("This command can only be used in-game.");
+        return true;
+    }
+
+    if (!getConfig().getBoolean("aimusic.enabled", true)) {
+        player.sendMessage("§cMusic generation is disabled.");
+        return true;
+    }
+
+    if (args.length == 0) {
+        player.sendMessage("§eUsage: /aimusic <description>");
+        return true;
+    }
+
+    int cooldown = Math.max(
+            0,
+            getConfig().getInt("aimusic.cooldown-seconds", 60)
+    );
+
+    long now = System.currentTimeMillis();
+    long previous = lastUse.getOrDefault(player.getUniqueId(), 0L);
+    long remaining = cooldown - ((now - previous) / 1000L);
+
+    if (remaining > 0) {
+        player.sendMessage("§cPlease wait " + remaining
+                + " seconds before generating music again.");
+        return true;
+    }
+
+    lastUse.put(player.getUniqueId(), now);
+
+    String prompt = String.join(" ", args).trim();
+
+    player.sendMessage("§aGenerating your music! Please wait...");
+
+    aiMusicGenerator.generate(player, prompt);
+    return true;
+}
         if (command.getName().equalsIgnoreCase("aimap")) {
     if (!sender.hasPermission("aichatbot.map")) {
         sender.sendMessage("§cYou don't have permissions!");
